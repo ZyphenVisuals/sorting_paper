@@ -8,5 +8,5 @@ add_executable(sorting_paper main.c
         print_utils.h
         benchmark_utils.c
         benchmark_utils.h
-        algorithms/bubble_sort.cpp
+        algorithms/bubble_sort.c
         algorithms/bubble_sort.h)
