@@ -1,0 +1,67 @@
+//
+// Created by iulian on 5/8/24.
+//
+
+#include "benchmark_utils.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void fill_random(int* data, const unsigned short int length) {
+    for(int i=0; i<length; i++) {
+        data[i] = rand();
+    }
+}
+
+void fill_ascending(int* data, const unsigned short int length) {
+    for(int i=0; i<length; i++) {
+        data[i] = i+1;
+    }
+}
+
+void fill_descending(int* data, const unsigned short int length) {
+    for(int i=0; i<length; i++) {
+        data[i] = length - i;
+    }
+}
+
+void fill_10(int* data, const unsigned short int length) {
+    for(int i=0; i<length; i++) {
+        data[i] = rand();
+    }
+}
+
+void fill_rsmall(int* data, const unsigned short int length) {
+    for(int i=0; i<length; i++) {
+        data[i] = rand() % 1000;
+    }
+}
+
+int *data_generator(const unsigned int length, const unsigned short int type) {
+    int* data = malloc(length * sizeof(long long int));
+
+    if(data == NULL) {
+        puts("Memory allocation failed.");
+        exit(1);
+    }
+
+    switch(type) {
+        case 1:
+            fill_random(data, length);
+            break;
+        case 2:
+            fill_ascending(data, length);
+            break;
+        case 3:
+            fill_descending(data, length);
+            break;
+        case 4:
+            fill_10(data, length);
+            break;
+        case 5:
+            fill_rsmall(data, length);
+        default:
+            break;
+    }
+    return data;
+}
