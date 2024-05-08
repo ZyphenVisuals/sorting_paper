@@ -9,4 +9,6 @@ add_executable(sorting_paper main.c
         benchmark_utils.c
         benchmark_utils.h
         algorithms/bubble_sort.c
-        algorithms/bubble_sort.h)
+        algorithms/bubble_sort.h
+        csv_utils.c
+        csv_utils.h)

@@ -8,31 +8,31 @@
 #include <stdlib.h>
 #include <time.h>
 
-void fill_random(int* data, const unsigned short int length) {
+void fill_random(int* data, const unsigned int length) {
     for(int i=0; i<length; i++) {
         data[i] = rand();
     }
 }
 
-void fill_ascending(int* data, const unsigned short int length) {
+void fill_ascending(int* data, const unsigned int length) {
     for(int i=0; i<length; i++) {
         data[i] = i+1;
     }
 }
 
-void fill_descending(int* data, const unsigned short int length) {
+void fill_descending(int* data, const unsigned int length) {
     for(int i=0; i<length; i++) {
         data[i] = length - i;
     }
 }
 
-void fill_10(int* data, const unsigned short int length) {
+void fill_10(int* data, const unsigned int length) {
     for(int i=0; i<length; i++) {
         data[i] = rand();
     }
 }
 
-void fill_rsmall(int* data, const unsigned short int length) {
+void fill_rsmall(int* data, const unsigned int length) {
     for(int i=0; i<length; i++) {
         data[i] = rand() % 1000;
     }
@@ -67,14 +67,14 @@ int *data_generator(const unsigned int length, const unsigned short int type) {
     return data;
 }
 
-double runner(void (*sort)(int* data, unsigned short int length), const unsigned short int length, const unsigned short int type, const unsigned short int passes) {
+double runner(void (*sort)(int* data, unsigned int length), const unsigned int length, const unsigned short int type, const unsigned short int passes) {
     clock_t total = 0;
     for(int i=0; i<passes; i++) {
         int* data = data_generator(length, type);
         const clock_t start = clock();
         (*sort)(data, length);
         const clock_t end = clock();
-        printf("BubbleSort took %fs\n", ((double)(end-start)) / CLOCKS_PER_SEC);
+        printf("%fs\n", ((double)(end-start)) / CLOCKS_PER_SEC);
         total += end - start;
         free(data);
     }

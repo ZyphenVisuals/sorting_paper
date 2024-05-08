@@ -4,6 +4,7 @@
 #include <time.h>
 
 #include "benchmark_utils.h"
+#include "csv_utils.h"
 #include "print_utils.h"
 #include "algorithms/bubble_sort.h"
 
@@ -24,16 +25,28 @@ int main(const int argc, char** argv) {
     }
     srand(time(NULL));
 
+    // set up files
+    FILE* f_bubble = create_csv("BubbleSort", min, max, type);
+    write_header(f_bubble);
+    FILE* f_bubble_qe = create_csv("BubbleSort(QuickExit)", min, max, type);
+    write_header(f_bubble_qe);
+
+    // run tests
     for(int l=min; l<=max; l += step) {
         printf("Sorting %d elements:\n", l);
 
         double t = runner(BubbleSort, l, type, passes);
-        printf("Average: %fs\n", t);
+        write_row(f_bubble, l, t);
 
         t = runner(BubbleSort_QuickExit, l, type, passes);
-        printf("Average: %fs\n", t);
+        write_row(f_bubble_qe, l, t);
 
         puts("");
     }
+
+    // close files
+    fclose(f_bubble);
+    fclose(f_bubble_qe);
+
     return 0;
 }
