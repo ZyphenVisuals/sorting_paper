@@ -7,6 +7,9 @@
 #include "csv_utils.h"
 #include "print_utils.h"
 #include "algorithms/bubble_sort.h"
+#include "algorithms/insertion_sort.h"
+#include "algorithms/merge_sort.h"
+#include "algorithms/selection_sort.h"
 
 int main(const int argc, char** argv) {
     // Argument handling
@@ -30,16 +33,36 @@ int main(const int argc, char** argv) {
     write_header(f_bubble);
     FILE* f_bubble_qe = create_csv("BubbleSort(QuickExit)", min, max, type);
     write_header(f_bubble_qe);
+    FILE* f_selection = create_csv("SelectionSort",min,max,type);
+    write_header(f_selection);
+    FILE* f_insert = create_csv("InsertionSort", min, max, type);
+    write_header(f_insert);
+    FILE* f_merge = create_csv("MergeSort", min, max, type);
+    write_header(f_merge);
 
     // run tests
     for(int l=min; l<=max; l += step) {
         printf("Sorting %d elements:\n", l);
 
+        puts("BubbleSort");
         double t = runner(BubbleSort, l, type, passes);
         write_row(f_bubble, l, t);
 
+        puts("BubbleSort(QuickExit)");
         t = runner(BubbleSort_QuickExit, l, type, passes);
         write_row(f_bubble_qe, l, t);
+
+        puts("SelectionSort");
+        t = runner(SelectionSort, l, type, passes);
+        write_row(f_selection, l, t);
+
+        puts("InsertionSort");
+        t = runner(InsertionSort, l, type, passes);
+        write_row(f_insert, l, t);
+
+        puts("MergeSort");
+        t = runner(MergeSortWrapper, l, type, passes);
+        write_row(f_merge, l, t);
 
         puts("");
     }
@@ -47,6 +70,9 @@ int main(const int argc, char** argv) {
     // close files
     fclose(f_bubble);
     fclose(f_bubble_qe);
+    fclose(f_selection);
+    fclose(f_insert);
+    fclose(f_merge);
 
     return 0;
 }
