@@ -38,10 +38,16 @@ int main(const int argc, char** argv) {
     write_header(f_selection);
     FILE* f_insert = create_csv("InsertionSort", min, max, type);
     write_header(f_insert);
+    FILE* f_insert_sentinel = create_csv("InsertionSort(Sentinel)", min, max, type);
+    write_header(f_insert_sentinel);
     FILE* f_merge = create_csv("MergeSort", min, max, type);
     write_header(f_merge);
     FILE* f_quick = create_csv("QuickSort", min, max, type);
     write_header(f_quick);
+    FILE* f_quick_random = create_csv("QuickSort(Random)", min, max, type);
+    write_header(f_quick_random);
+    FILE* f_quick_mot = create_csv("QuickSort(MoT)", min, max, type);
+    write_header(f_quick_mot);
 
     // run tests
     for(int l=min; l<=max; l += step) {
@@ -63,16 +69,30 @@ int main(const int argc, char** argv) {
         t = runner(InsertionSort, l, type, passes);
         write_row(f_insert, l, t);
 
+        puts("InsertionSort(Sentinel)");
+        t = runner(InsertionSort_Sentinel, l, type, passes);
+        write_row(f_insert_sentinel, l, t);
+
         puts("MergeSort");
-        t = runner(MergeSortWrapper, l, type, passes);
+        t = runner(MergeSort_Wrapper, l, type, passes);
         write_row(f_merge, l, t);
 
         puts("QuickSort");
-        t = runner(QuickSortWrapper, l, type, passes);
+        t = runner(QuickSort_Wrapper, l, type, passes);
         write_row(f_quick, l, t);
+
+        puts("QuickSort(Random)");
+        t = runner(QuickSort_Random_Wrapper, l, type, passes);
+        write_row(f_quick_random, l, t);
+
+        puts("QuickSort(MoT)");
+        t = runner(QuickSort_MoT_Wrapper, l, type, passes);
+        write_row(f_quick_mot, l, t);
 
         puts("");
     }
+
+    puts("Testing complete.");
 
     // close files
     fclose(f_bubble);
@@ -81,6 +101,9 @@ int main(const int argc, char** argv) {
     fclose(f_insert);
     fclose(f_merge);
     fclose(f_quick);
+    fclose(f_insert_sentinel);
+    fclose(f_quick_random);
+    fclose(f_quick_mot);
 
     return 0;
 }

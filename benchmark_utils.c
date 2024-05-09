@@ -39,7 +39,7 @@ void fill_rsmall(int* data, const unsigned int length) {
 }
 
 int *data_generator(const unsigned int length, const unsigned short int type) {
-    int* data = malloc(length * sizeof(long long int));
+    int* data = malloc(length * sizeof(int));
 
     if(data == NULL) {
         puts("Memory allocation failed.");
@@ -67,13 +67,13 @@ int *data_generator(const unsigned int length, const unsigned short int type) {
     return data;
 }
 
-char validate(const int* data, const unsigned int length) {
+unsigned int validate(const int* data, const unsigned int length) {
     for(int i=1; i<length; i++) {
         if(data[i] < data[i-1]) {
-            return 0;
+            return i;
         }
     }
-    return 1;
+    return 0;
 }
 
 double runner(void (*sort)(int* data, unsigned int length), const unsigned int length, const unsigned short int type, const unsigned short int passes) {
@@ -84,11 +84,10 @@ double runner(void (*sort)(int* data, unsigned int length), const unsigned int l
         (*sort)(data, length);
         const clock_t end = clock();
         printf("%fs\n", ((double)(end-start)) / CLOCKS_PER_SEC);
-        if(!validate(data, length)) {
-            printf("[ERROR] Wrong order.\nFirst 10 elements:");
-            for(int x=0; x<10; x++) {
-                printf(" %d", data[x]);
-            }
+        const unsigned int err = validate(data, length);
+        if(err) {
+            printf("[ERROR] Wrong order.\nOut of order elements around %u:\n", err);
+            printf("%d %d %d\n", data[err-1], data[err], data[err+1]);
             exit(1);
         }
         total += end - start;

@@ -5,26 +5,28 @@
 #include "bubble_sort.h"
 
 void BubbleSort(int* data, const unsigned int length) {
-    for(int pass = length - 1; pass >= 0; pass--) {
-        for(int i=0; i <= pass - 1 ; i++) {
-            if(data[i] > data[i+1]) {
-                const int temp = data[i];
-                data[i] = data[i+1];
-                data[i+1] = temp;
+    int i, j, t;
+    for(i = length-1; i >= 0; i--) {
+        for(j = 1; j <= i; j++) {
+            if(data[j-1] > data[j]) {
+                t = data[j-1];
+                data[j-1] = data[j];
+                data[j] = t;
             }
         }
     }
 }
 
 void BubbleSort_QuickExit(int* data, const unsigned int length) {
-    int swapped = 1;
-    for(int pass = length - 1; pass >= 0 && swapped; pass--) {
+    char swapped = 1;
+    int i, j, t;
+    for(i = length-1; i >= 0 && swapped; i--) {
         swapped = 0;
-        for(int i=0; i <= pass - 1 ; i++) {
-            if(data[i] > data[i+1]) {
-                const int temp = data[i];
-                data[i] = data[i+1];
-                data[i+1] = temp;
+        for(j = 1; j <= i; j++) {
+            if(data[j-1] > data[j]) {
+                t = data[j-1];
+                data[j-1] = data[j];
+                data[j] = t;
                 swapped = 1;
             }
         }

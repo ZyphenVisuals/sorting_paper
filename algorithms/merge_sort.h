@@ -5,6 +5,6 @@
 #ifndef MERGE_SORT_H
 #define MERGE_SORT_H
 
-void MergeSortWrapper(int* data, const unsigned int length);
+void MergeSort_Wrapper(int* data, const unsigned int length);
 
 #endif //MERGE_SORT_H

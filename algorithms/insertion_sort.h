@@ -6,5 +6,6 @@
 #define INSERTION_SORT_H
 
 void InsertionSort(int* data, const unsigned int length);
+void InsertionSort_Sentinel(int* data, const unsigned int length);
 
 #endif //INSERTION_SORT_H
