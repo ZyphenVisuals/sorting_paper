@@ -9,6 +9,7 @@
 #include "algorithms/bubble_sort.h"
 #include "algorithms/insertion_sort.h"
 #include "algorithms/merge_sort.h"
+#include "algorithms/quick_sort.h"
 #include "algorithms/selection_sort.h"
 
 int main(const int argc, char** argv) {
@@ -39,6 +40,8 @@ int main(const int argc, char** argv) {
     write_header(f_insert);
     FILE* f_merge = create_csv("MergeSort", min, max, type);
     write_header(f_merge);
+    FILE* f_quick = create_csv("QuickSort", min, max, type);
+    write_header(f_quick);
 
     // run tests
     for(int l=min; l<=max; l += step) {
@@ -64,6 +67,10 @@ int main(const int argc, char** argv) {
         t = runner(MergeSortWrapper, l, type, passes);
         write_row(f_merge, l, t);
 
+        puts("QuickSort");
+        t = runner(QuickSortWrapper, l, type, passes);
+        write_row(f_quick, l, t);
+
         puts("");
     }
 
@@ -73,6 +80,7 @@ int main(const int argc, char** argv) {
     fclose(f_selection);
     fclose(f_insert);
     fclose(f_merge);
+    fclose(f_quick);
 
     return 0;
 }
