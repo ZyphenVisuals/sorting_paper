@@ -67,6 +67,15 @@ int *data_generator(const unsigned int length, const unsigned short int type) {
     return data;
 }
 
+char validate(const int* data, const unsigned int length) {
+    for(int i=1; i<length; i++) {
+        if(data[i] < data[i-1]) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
 double runner(void (*sort)(int* data, unsigned int length), const unsigned int length, const unsigned short int type, const unsigned short int passes) {
     clock_t total = 0;
     for(int i=0; i<passes; i++) {
@@ -75,6 +84,10 @@ double runner(void (*sort)(int* data, unsigned int length), const unsigned int l
         (*sort)(data, length);
         const clock_t end = clock();
         printf("%fs\n", ((double)(end-start)) / CLOCKS_PER_SEC);
+        if(!validate(data, length)) {
+            puts("[ERROR] Wrong order.");
+            exit(1);
+        }
         total += end - start;
         free(data);
     }
