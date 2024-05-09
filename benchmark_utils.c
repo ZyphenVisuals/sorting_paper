@@ -85,7 +85,10 @@ double runner(void (*sort)(int* data, unsigned int length), const unsigned int l
         const clock_t end = clock();
         printf("%fs\n", ((double)(end-start)) / CLOCKS_PER_SEC);
         if(!validate(data, length)) {
-            puts("[ERROR] Wrong order.");
+            printf("[ERROR] Wrong order.\nFirst 10 elements:");
+            for(int x=0; x<10; x++) {
+                printf(" %d", data[x]);
+            }
             exit(1);
         }
         total += end - start;

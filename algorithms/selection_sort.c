@@ -10,7 +10,7 @@ void SelectionSort(int* data, const unsigned int length) {
         min = i;
         for(j=i+1;j<length;j++) {
             if(data[j]<data[min]) {
-                min = i;
+                min = j;
             }
         }
         temp = data[min];
