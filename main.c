@@ -7,6 +7,7 @@
 #include "csv_utils.h"
 #include "print_utils.h"
 #include "algorithms/bubble_sort.h"
+#include "algorithms/counting_sort.h"
 #include "algorithms/insertion_sort.h"
 #include "algorithms/merge_sort.h"
 #include "algorithms/quick_sort.h"
@@ -48,6 +49,8 @@ int main(const int argc, char** argv) {
     write_header(f_quick_random);
     FILE* f_quick_mot = create_csv("QuickSort(MoT)", min, max, type);
     write_header(f_quick_mot);
+    FILE* f_counting = create_csv("CountingSort", min, max, type);
+    write_header(f_counting);
 
     // run tests
     for(int l=min; l<=max; l += step) {
@@ -89,6 +92,10 @@ int main(const int argc, char** argv) {
         t = runner(QuickSort_MoT_Wrapper, l, type, passes);
         write_row(f_quick_mot, l, t);
 
+        puts("CountingSort");
+        t = runner(CountingSort, l, type, passes);
+        write_row(f_counting, l, t);
+
         puts("");
     }
 
@@ -104,6 +111,7 @@ int main(const int argc, char** argv) {
     fclose(f_insert_sentinel);
     fclose(f_quick_random);
     fclose(f_quick_mot);
+    fclose(f_counting);
 
     return 0;
 }

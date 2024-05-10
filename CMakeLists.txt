@@ -19,4 +19,6 @@ add_executable(sorting_paper main.c
         algorithms/merge_sort.c
         algorithms/merge_sort.h
         algorithms/quick_sort.c
-        algorithms/quick_sort.h)
+        algorithms/quick_sort.h
+        algorithms/counting_sort.c
+        algorithms/counting_sort.h)
