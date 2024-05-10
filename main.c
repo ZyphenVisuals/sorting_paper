@@ -20,11 +20,11 @@ int main(const int argc, char** argv) {
         print_help();
         return 0;
     }
-    if(argc != 6) {
-        puts("[ERROR] Command usage: \"sort [min] [max] [step] [type] [passes]\". For more info use \"sort help\"");
+    if(argc != 7) {
+        puts("[ERROR] Command usage: \"sort [min] [max] [step] [type] [passes] [ignoreslow]\". For more info use \"sort help\"");
         return 1;
     }
-    const unsigned int min = atoi(argv[1]), max = atoi(argv[2]), step = atoi(argv[3]), type = atoi(argv[4]), passes = atoi(argv[5]);
+    const unsigned int min = atoi(argv[1]), max = atoi(argv[2]), step = atoi(argv[3]), type = atoi(argv[4]), passes = atoi(argv[5]), ignoreslow = atoi(argv[6]);
     if(type < 1 || type > 5) {
         puts("[ERROR] Invalid type. See \"sort help\"");
         return 1;
@@ -32,16 +32,23 @@ int main(const int argc, char** argv) {
     srand(time(NULL));
 
     // set up files
-    FILE* f_bubble = create_csv("BubbleSort", min, max, type);
-    write_header(f_bubble);
-    FILE* f_bubble_qe = create_csv("BubbleSort(QuickExit)", min, max, type);
-    write_header(f_bubble_qe);
-    FILE* f_selection = create_csv("SelectionSort",min,max,type);
-    write_header(f_selection);
-    FILE* f_insert = create_csv("InsertionSort", min, max, type);
-    write_header(f_insert);
-    FILE* f_insert_sentinel = create_csv("InsertionSort(Sentinel)", min, max, type);
-    write_header(f_insert_sentinel);
+    FILE* f_bubble = NULL;
+    FILE* f_bubble_qe = NULL;
+    FILE* f_selection = NULL;
+    FILE* f_insert = NULL;
+    FILE* f_insert_sentinel = NULL;
+    if(!ignoreslow) {
+        f_bubble = create_csv("BubbleSort", min, max, type);
+        write_header(f_bubble);
+        f_bubble_qe = create_csv("BubbleSort(QuickExit)", min, max, type);
+        write_header(f_bubble_qe);
+        f_selection = create_csv("SelectionSort",min,max,type);
+        write_header(f_selection);
+        f_insert = create_csv("InsertionSort", min, max, type);
+        write_header(f_insert);
+        f_insert_sentinel = create_csv("InsertionSort(Sentinel)", min, max, type);
+        write_header(f_insert_sentinel);
+    }
     FILE* f_merge = create_csv("MergeSort", min, max, type);
     write_header(f_merge);
     FILE* f_quick = create_csv("QuickSort", min, max, type);
@@ -59,25 +66,29 @@ int main(const int argc, char** argv) {
     for(int l=min; l<=max; l += step) {
         printf("Sorting %d elements:\n", l);
 
-        puts("BubbleSort");
-        double t = runner(BubbleSort, l, type, passes);
-        write_row(f_bubble, l, t);
+        double t;
 
-        puts("BubbleSort(QuickExit)");
-        t = runner(BubbleSort_QuickExit, l, type, passes);
-        write_row(f_bubble_qe, l, t);
+        if(!ignoreslow) {
+            puts("BubbleSort");
+            t = runner(BubbleSort, l, type, passes);
+            write_row(f_bubble, l, t);
 
-        puts("SelectionSort");
-        t = runner(SelectionSort, l, type, passes);
-        write_row(f_selection, l, t);
+            puts("BubbleSort(QuickExit)");
+            t = runner(BubbleSort_QuickExit, l, type, passes);
+            write_row(f_bubble_qe, l, t);
 
-        puts("InsertionSort");
-        t = runner(InsertionSort, l, type, passes);
-        write_row(f_insert, l, t);
+            puts("SelectionSort");
+            t = runner(SelectionSort, l, type, passes);
+            write_row(f_selection, l, t);
 
-        puts("InsertionSort(Sentinel)");
-        t = runner(InsertionSort_Sentinel, l, type, passes);
-        write_row(f_insert_sentinel, l, t);
+            puts("InsertionSort");
+            t = runner(InsertionSort, l, type, passes);
+            write_row(f_insert, l, t);
+
+            puts("InsertionSort(Sentinel)");
+            t = runner(InsertionSort_Sentinel, l, type, passes);
+            write_row(f_insert_sentinel, l, t);
+        }
 
         puts("MergeSort");
         t = runner(MergeSort_Wrapper, l, type, passes);
@@ -109,13 +120,15 @@ int main(const int argc, char** argv) {
     puts("Testing complete.");
 
     // close files
-    fclose(f_bubble);
-    fclose(f_bubble_qe);
-    fclose(f_selection);
-    fclose(f_insert);
+    if(!ignoreslow) {
+        fclose(f_bubble);
+        fclose(f_bubble_qe);
+        fclose(f_selection);
+        fclose(f_insert);
+        fclose(f_insert_sentinel);
+    }
     fclose(f_merge);
     fclose(f_quick);
-    fclose(f_insert_sentinel);
     fclose(f_quick_random);
     fclose(f_quick_mot);
     fclose(f_counting);
