@@ -28,7 +28,15 @@ void fill_descending(int* data, const unsigned int length) {
 
 void fill_10(int* data, const unsigned int length) {
     for(int i=0; i<length; i++) {
-        data[i] = rand();
+        data[i] = i+1;
+    }
+    // execute a swap for 5% of the elements, affecting 10% of the array
+    for(int i=0; i<length/20; i++) {
+        const int a = rand() % length;
+        const int b = rand() % length;
+        const int temp = data[a];
+        data[a] = data[b];
+        data[b] = temp;
     }
 }
 
