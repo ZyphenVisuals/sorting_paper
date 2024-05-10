@@ -10,7 +10,7 @@
 
 void fill_random(int* data, const unsigned int length) {
     for(int i=0; i<length; i++) {
-        data[i] = rand();
+        data[i] = rand() % 100000000;
     }
 }
 

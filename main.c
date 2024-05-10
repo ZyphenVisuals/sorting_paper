@@ -63,7 +63,11 @@ int main(const int argc, char** argv) {
     write_header(f_radix);
 
     // run tests
-    for(int l=min; l<=max; l += step) {
+    int l = min;
+    if(l == 0) {
+        l = step;
+    };
+    for(l; l<=max; l += step) {
         printf("Sorting %d elements:\n", l);
 
         double t;
