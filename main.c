@@ -11,6 +11,7 @@
 #include "algorithms/insertion_sort.h"
 #include "algorithms/merge_sort.h"
 #include "algorithms/quick_sort.h"
+#include "algorithms/radix_sort.h"
 #include "algorithms/selection_sort.h"
 
 int main(const int argc, char** argv) {
@@ -51,6 +52,8 @@ int main(const int argc, char** argv) {
     write_header(f_quick_mot);
     FILE* f_counting = create_csv("CountingSort", min, max, type);
     write_header(f_counting);
+    FILE* f_radix = create_csv("RadixSort", min, max, type);
+    write_header(f_radix);
 
     // run tests
     for(int l=min; l<=max; l += step) {
@@ -96,6 +99,10 @@ int main(const int argc, char** argv) {
         t = runner(CountingSort, l, type, passes);
         write_row(f_counting, l, t);
 
+        puts("RadixSort");
+        t = runner(RadixSort, l, type, passes);
+        write_row(f_radix, l, t);
+
         puts("");
     }
 
@@ -112,6 +119,7 @@ int main(const int argc, char** argv) {
     fclose(f_quick_random);
     fclose(f_quick_mot);
     fclose(f_counting);
+    fclose(f_radix);
 
     return 0;
 }

@@ -21,4 +21,6 @@ add_executable(sorting_paper main.c
         algorithms/quick_sort.c
         algorithms/quick_sort.h
         algorithms/counting_sort.c
-        algorithms/counting_sort.h)
+        algorithms/counting_sort.h
+        algorithms/radix_sort.c
+        algorithms/radix_sort.h)
