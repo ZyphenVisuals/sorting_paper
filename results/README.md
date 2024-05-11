@@ -1,6 +1,6 @@
 # Warning
 
-Don't remove this folder, it needs to exist in order for the program to have a place to output to.
+This folder contains the final results used in my paper. The files are safe to remove, however do not remove this folder, it needs to exist in order for the program to have a place to output to.
 
 # Structure
 
