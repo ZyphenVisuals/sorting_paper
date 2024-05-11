@@ -98,6 +98,7 @@ int main(const int argc, char** argv) {
         t = runner(MergeSort_Wrapper, l, type, passes);
         write_row(f_merge, l, t);
 
+        // note: QuickSort in the worst case scenario is O(n^2). you might want to disable it with other slow algorithms
         puts("QuickSort");
         t = runner(QuickSort_Wrapper, l, type, passes);
         write_row(f_quick, l, t);

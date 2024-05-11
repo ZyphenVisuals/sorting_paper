@@ -58,8 +58,8 @@ void QuickSort_Random(int* data, const int l, const int r) {
         t = data[i];
         data[i] = data[r];
         data[r] = t;
-        QuickSort(data, l, i-1);
-        QuickSort(data, i+1, r);
+        QuickSort_Random(data, l, i-1);
+        QuickSort_Random(data, i+1, r);
     }
 }
 
@@ -104,8 +104,8 @@ void QuickSort_MoT(int* data, const int l, const int r) {
         t = data[i];
         data[i] = data[r];
         data[r] = t;
-        QuickSort(data, l, i-1);
-        QuickSort(data, i+1, r);
+        QuickSort_MoT(data, l, i-1);
+        QuickSort_MoT(data, i+1, r);
     }
 }
 
